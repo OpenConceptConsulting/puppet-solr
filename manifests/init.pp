@@ -30,49 +30,25 @@
 # === Authors
 #
 # Vamsee Kanakala <vamsee AT riseup D0T net>
+# Xavier Landreville <xavier AT openconcept DOT ca>
 #
 # === Copyright
 #
 # Copyright 2012-2013 Vamsee Kanakala, unless otherwise noted.
+# Copyright 2015 OpenConcept Consulting Inc.
 #
 
 class solr (
-  $cores      = 'UNSET',
-  $version    = 'UNSET',
-  $mirror     = 'UNSET',
-  $dist_root  = 'UNSET',
-) {
+  $cores     = $solr::params::cores,
+  $version   = $solr::params::version,
+  $dl_mirror = $solr::params::dl_mirror,
+  $dl_dir    = $solr::params::dl_dir,
+) inherits solr::params {
 
-  include solr::params
-
-  $my_cores = $cores ? {
-    'UNSET'   => $::solr::params::cores,
-    default   => $cores,
-  }
-
-  $my_version = $version ? {
-    'UNSET'   => $::solr::params::solr_version,
-    default   => $version,
-  }
-
-  $my_mirror = $version ? {
-    'UNSET'   => $::solr::params::mirror_site,
-    default   => $mirror,
-  }
-
-  $my_dist_root = $dist_root ? {
-    'UNSET'   => $::solr::params::dist_root,
-    default   => $dist_root,
-  }
-
-  class {'solr::install': } ->
-  class {'solr::config':
-    cores     => $my_cores,
-    version   => $my_version,
-    mirror    => $my_mirror,
-    dist_root => $my_dist_root,
-  } ~>
-  class {'solr::service': } ->
-  Class['solr']
+  anchor { 'solr::begin': } ->
+  class { 'solr::install': } ->
+  class { 'solr::config': } ~>
+  class { 'solr::service': } ->
+  anchor { 'solr::end': }
 
 }

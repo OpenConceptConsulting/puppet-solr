@@ -4,14 +4,11 @@
 # === Actions
 # - Sets up jetty service
 #
-class solr::service {
+class solr::service inherits solr {
 
-  #restart after copying new config
   service { 'jetty':
-    ensure     => running,
-    hasrestart => true,
-    hasstatus  => true,
-    require    => Package['jetty'],
+    ensure => running,
+    enable => true,
   }
 
 }

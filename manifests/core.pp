@@ -9,37 +9,28 @@
 # - Copies over the config directory for the file
 # - Creates the data directory for the core
 #
-define solr::core(
-  $core_name = $title,
+define solr::core (
+  $core_name   = $title,
+  $manage_conf = true,
+  $solr_home   = $::solr::solr_home,
+  $solr_data   = $::solr::solr_data,
 ) {
-  include solr::params
 
-  $solr_home  = $solr::params::solr_home
+  $core_home = "${solr_home}/${core_name}"
+  $core_data = "${solr_data}/${core_name}"
 
-  file { "${solr_home}/${core_name}":
-    ensure  => directory,
-    owner   => 'jetty',
-    group   => 'jetty',
-    require => File[$solr_home],
+  file { [$core_home, $core_data]:
+    ensure => directory,
+    owner  => 'jetty',
+    group  => 'jetty',
   }
 
-  #Copy its config over
-  file { "${solr_home}/${core_name}/conf":
+  file { "${core_home}/conf":
     ensure  => directory,
     owner   => 'jetty',
     group   => 'jetty',
     recurse => true,
     source  => 'puppet:///modules/solr/conf',
-    require => File["${solr_home}/${core_name}"],
-  }
-
-  #Finally, create the data directory where solr stores
-  #its indexes with proper directory ownership/permissions.
-  file { "/var/lib/solr/${core_name}":
-    ensure  => directory,
-    owner   => 'jetty',
-    group   => 'jetty',
-    require => File["${solr_home}/${core_name}/conf"],
   }
 
 }
