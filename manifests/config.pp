@@ -14,6 +14,13 @@
 #
 class solr::config inherits solr {
 
+  augeas { 'jetty_solr_port':
+    context => '/files/etc/default/jetty',
+    changes => [
+      'set JETTY_PORT 8983',
+    ],
+  }
+
   augeas { 'jetty_solr_home':
     context => '/files/etc/default/jetty',
     changes => [
