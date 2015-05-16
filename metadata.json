@@ -1,6 +1,6 @@
 {
   "name": "OpenConceptConsulting-solr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "OpenConceptConsulting",
   "summary": "A puppet module for solr",
   "license": "MIT",
@@ -8,15 +8,25 @@
   "project_page": "https://github.com/OpenConceptConsulting/puppet-solr",
   "issues_url": "https://github.com/OpenConceptConsulting/puppet-solr/issues",
   "description": "Configure and set up a multi-core solr instance",
-  "tags": ["solr", "apache", "jetty"],
+  "tags": [
+    "solr",
+    "apache",
+    "jetty"
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
-      "operatingsystemrelease":[ "6.0", "7.0"]
+      "operatingsystemrelease": [
+        "6.0",
+        "7.0"
+      ]
     },
     {
       "operatingsystem": "Ubuntu",
-      "operatingsystemrelease":[ "12.04", "14.04"]
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
     }
   ],
   "requirements": [
