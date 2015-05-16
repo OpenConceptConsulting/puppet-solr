@@ -25,12 +25,14 @@ define solr::core (
     group  => 'jetty',
   }
 
-  file { "${core_home}/conf":
-    ensure  => directory,
-    owner   => 'jetty',
-    group   => 'jetty',
-    recurse => true,
-    source  => 'puppet:///modules/solr/conf',
+  if $manage_conf {
+    file { "${core_home}/conf":
+      ensure  => directory,
+      owner   => 'jetty',
+      group   => 'jetty',
+      recurse => true,
+      source  => 'puppet:///modules/solr/conf',
+    }
   }
 
 }
