@@ -17,7 +17,7 @@ class solr::params {
   $default_solr_data  = '/var/lib/solr'
 
   case $::osfamily {
-    Debian: {
+    'Debian': {
       $jetty_home = $default_jetty_home
       $solr_home  = $default_solr_home
       $solr_data  = $default_solr_data
